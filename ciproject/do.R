@@ -1,5 +1,5 @@
 #!/usr/local/bin/Rscript
-setwd("~/sample-adhoc/ciproject")
+setwd("~/fhr-analysis/ciproject")
 tryCatch({
     source("funct.R")
     }, error=function(e) {
