@@ -1,2 +1,2 @@
 # fhr
-R scripts to retrieve data from HDFS. For personal use. 
+Work scripts for FHR related projects.
