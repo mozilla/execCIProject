@@ -101,4 +101,23 @@ checkDefaultSwitch <- function(allDaysInfo, dailyDefault){
 }
 
 
+checkDefaultSwitch2 <- function(allDaysInfo, dailyDefault){
+        dailyDefault <- dailyDefault[!is.na(dailyDefault)]
+        first.use <- "google"
+        for (i in 1:length(dailyDefault)){
+            last.use <- dailyDefault[[i]]
+            if(first.use != last.use){
+                diff <- as.Date(names(dailyDefault[i])) - as.Date(names(dailyDefault[1]))
+                return(list(last.use = last.use, diff = diff))
+            }
+        }
+        # If i goes to the end, exit for loop
+        diff <- as.Date(names(dailyDefault[i])) - as.Date(names(dailyDefault[1]))
+        return(list(last.use = last.use, diff = diff))
+    }
+
+
+
+
+
 
