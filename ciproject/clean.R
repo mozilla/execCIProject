@@ -22,7 +22,7 @@ srchInfo <- data.table(srch_est = srchRange[tableCI$daysSinceSampleCreated,][[1]
 secInfo <- data.table(sec_est = secRange[tableCI$daysSinceSampleCreated,][[1]], sec_lb = secRange[tableCI$daysSinceSampleCreated,][[2]]*1.03, sec_ub = secRange[tableCI$daysSinceSampleCreated,][[3]]*0.97)
 finalTable <- data.table(tableCI, mauInfo, srchInfo, secInfo)
 
-write.table(finalTable, file = "~/output/confidence_interval .csv", sep = ",", row.names = FALSE)
+write.table(finalTable, file = "~/output/confidence_interval.csv", sep = ",", row.names = FALSE)
 
 
 
