@@ -7,7 +7,7 @@ mergeTrueValue <- merge(lagData, calcTrue, by = 'month')
 addPropData <- mergeTrueValue[, ":="(pmau = tmau/true.mau, psrch = tsearch/true.search, psec = tsec/true.time)]
 cleanData <- addPropData[, (c("pmau", "psrch", "psec")) := lapply(.SD, forceToOne), .SDcols = c("pmau", "psrch", "psec")]
 
-mauRange <- intTable(glm(pmau ~ daysSince, data= cleanData, quasibinomial)))
+mauRange <- intTable(glm(pmau ~ daysSince, data= cleanData, quasibinomial))
 srchRange <- intTable(glm(psrch ~ daysSince, data= cleanData, quasibinomial))
 secRange <- intTable(glm(psec ~ daysSince, data= cleanData, quasibinomial))
 
