@@ -1,6 +1,6 @@
 # load data from output folder
 load.all <- rhls("/user/cchoi/output/fhr-lag")$file
-lagData <- createDataTable(mergeAllFiles(load.all))d = odbc(user="fhr",pass="This is Read Only",USER=Sys.getenv("USER"),jdbcproc="jdbc:vertica://vertica.metrics.scl3.mozilla.com:5433/metrics") #sguha to access ADI vertica rollups
+lagData <- createDataTable(mergeAllFiles(load.all))
 
 calcTrue <- lagData[order(sampledate, month),][daysSince >=120,][, list(true.mau = mean(tmau), true.search = mean(tsearch), true.time = mean(tsec)), by = month]
 mergeTrueValue <- merge(lagData, calcTrue, by = 'month')
