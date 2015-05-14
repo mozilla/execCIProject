@@ -117,7 +117,3 @@ checkDefaultSwitch2 <- function(allDaysInfo, dailyDefault){
     }
 
 
-
-
-
-
