@@ -25,11 +25,6 @@ createMonthList <- function(start.end){
 	})
 }
 
-isWithinDateRange <- function(sampledate){
-	daysSince <- as.numeric(sampledate - month$end.date + 1)
-	daysSince >= 0 & daysSince <= 150
-}
-
 getInterestDaterangeInfo <- function(month, allDaysInfo){
 	start.date <- strftime(month$start.date)
 	end.date <- strftime(month$end.date)

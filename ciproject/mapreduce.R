@@ -8,7 +8,9 @@ m = function(key,jsonData){
 	allDaysInfo <- rData$data$days
 	if(!is.standard.profile(rData)) return()
 	for (month in listOfMonths){
-		if(!isWithinDateRange(sampledate)) return()
+		daysSince <- as.numeric(sampledate - month$end.date + 1)
+		correctPeriod <- (daysSince >= 0 & daysSince <= 150)
+		if(!correctPeriod) return()
 		days <- getInterestDaterangeInfo(month, allDaysInfo)
 		daysSinceMonthEnded <- as.numeric(sampledate - month$end.date + 1)
 		whichmonth <- as.numeric(format(month$start.date, "%m"))
@@ -39,6 +41,3 @@ for (sample in all.samples){
 		read = FALSE
 	)
 }
-
-# if the folder dates are greater than the month but not specified end date, then don't run.
-# if the folder is after the specified date, then run
