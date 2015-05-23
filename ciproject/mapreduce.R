@@ -30,7 +30,7 @@ for (sample in all.samples){
 		z = rhwatch(map=m,
 		mapred=list(mapred.job.priority = "VERY_HIGH"),
 		jobname = "monthly confidence interval",
-		input=sqtxt(p),
+		input=sqtxt(sample),
 		param = list(sampledate = sampledate),
 		output = sprintf("/user/cchoi/output/fhr-lag/%s", sampledate),
 		reduce = rhoptions()$template$colsummer,
@@ -40,3 +40,5 @@ for (sample in all.samples){
 	)
 }
 
+# if the folder dates are greater than the month but not specified end date, then don't run.
+# if the folder is after the specified date, then run

@@ -1,5 +1,5 @@
 #!/usr/local/bin/Rscript
-setwd("~/fhr-analysis/ciproject")
+setwd("~/fhr/ciproject")
 tryCatch({
     source("funct.R")
     }, error=function(e) {
@@ -24,3 +24,4 @@ tryCatch({
  })
 
 email("CIProject: Success", body = sprintf("The last sample used: %s", as.character(max(sampleCreationDates))))
+
