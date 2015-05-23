@@ -29,30 +29,15 @@ tagDaysByVersion <- function(d){
     return(days)
 }
 
-# Check that it is a new profile, created after version release date
-checkNewProfileOnLatestVersion <- function(rData, version.release.date){
-    # If it is standard profile on release channel
-    if(is.standard.profile(rData) & on.release.channel(rData)){
-        # If profile creation date is available, get creation date, else NULL
-        profile.creation.date <- tryCatch(getProfileCreationDate(rData), error = function(e) { NULL }) 
-        # If it isn't null, check whether profile was created after version release date
-        if(!is.null(profile.creation.date)) {
-            profile.creation.date > version.release.date
-        }
-    }
-    else{
-        return(FALSE)
-    }
-}
-
 # Check if profile was targeted 
 checkTargetedProfile <- function(rData){
-    profInfo <- rData$data$last$org.mozilla.appInfo.appinfo 
-    locale <- profInfo$locale 
-    geo <- rData$geo
-    distribtype <- profInfo$distributionID
-    targeted <- isTargetedY(locale, distribtype, geo)
+    distrib <- get.distribution.type(rData)
+    locale <- get.locale(rData)
+    geo <- get.val(rData, "geoCountry")
+    version <- get.current.version(rData)
+    isTargetedY(locale, distrib, version, geo)
 }
+
 
 getDefaultForEachDay <- function(rData, allDaysInfo){
     distribtype <- rData$data$last$org.mozilla.appInfo.appinfo$distributionID
@@ -69,7 +54,7 @@ getDefaultForEachDay <- function(rData, allDaysInfo){
     default.seq[order(names(default.seq))]
 }
 
-checkVersionHistory <- function(allDaysInfo, version){
+checkVersionHistory <- function(allDaysInfo, current.version){
     history <- unlist(lapply(allDaysInfo, function(day){
         dayVersion <- day$versioninfo$version
         if(is.na(dayVersion)) {
@@ -78,7 +63,7 @@ checkVersionHistory <- function(allDaysInfo, version){
                 return(as.numeric(majorVersion(dayVersion)))
             }
             }))
-    any(history < version , na.rm = TRUE)
+    any(history < current.version , na.rm = TRUE)
     }
 
 checkStatusConditions <- function(dailyDefault){
