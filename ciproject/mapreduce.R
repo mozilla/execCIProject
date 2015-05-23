@@ -10,16 +10,16 @@ m = function(key,jsonData){
 	for (month in listOfMonths){
 		daysSince <- as.numeric(sampledate - month$end.date + 1)
 		correctPeriod <- (daysSince >= 0 & daysSince <= 150)
-		if(!correctPeriod) return()
+		if(!correctPeriod) next
 		days <- getInterestDaterangeInfo(month, allDaysInfo)
+		if(length(days) == 0) next
 		daysSinceMonthEnded <- as.numeric(sampledate - month$end.date + 1)
 		whichmonth <- as.numeric(format(month$start.date, "%m"))
 		totalsec <- totalActivity(days)$totalsec
 		totalsrch <- getTotalSearch(days)
 		totalmau <- getMAUInfo(month, rData)
 		# if sample was created before the month was over, the sample should not be calculating the tmau
-		rhcollect(list(month = whichmonth, sampledate = as.character(sampledate), daysSince = daysSinceMonthEnded), 
-		c(tmau = totalmau, tsec = totalsec, tsearch = totalsrch))
+		rhcollect(list(month = whichmonth, sampledate = as.character(sampledate), daysSince = daysSinceMonthEnded), c(tmau = totalmau, tsec = totalsec, tsearch = totalsrch))
 	}
 }
 
@@ -41,3 +41,6 @@ for (sample in all.samples){
 		read = FALSE
 	)
 }
+
+
+
