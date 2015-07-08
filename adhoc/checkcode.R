@@ -6,7 +6,7 @@ source("/usr/local/share/rhipe.mozilla.setup.R")
 library(rjson)
 rhcollect = function(a,b) list(a,b)
 jsonData = rhread("/user/sguha/fhr/samples/output/1pct", textual=TRUE,max=50) 
-ss = jsonData[[7]][[2]]
+ss = jsonData[[5]][[2]]
 jsonData = ss
 
 # FHR V3 Check (Fennec)
@@ -18,5 +18,6 @@ if(r$environments$current$geckoAppInfo$name != "fennec") return()
 d <- r$data$days
 names(d)
 
-r <- fhr.load.some() #de-json
-k <- capture.output(mapply(mapper, 1, a))
+jsonData <- fhr.load.some(1)
+mapply(m, jsonData) #de-json
+k <- capture.output(mapply(m, jsonData, 1))
