@@ -31,14 +31,14 @@ for (sample in all.samples){
 	if(!(sampledate %in% sampleToRun)) next
 	if(!sampleCreatedAfterMonthEnded(listDates, sample)) next
 		z = rhwatch(map=m,
-		mapred=list(mapred.job.priority = "VERY_HIGH"),
-		jobname = "monthly confidence interval",
-		input=sqtxt(sample),
-		param = list(sampledate = sampledate),
-		output = sprintf("%s/fhr-lag/%s",BASEPATH, sampledate),
-		reduce = rhoptions()$template$colsummer,
-		setup = expression(map = {library(rjson)}),
-		debug = "count",
-		read = FALSE
+                            mapred=list(mapred.job.priority = "VERY_HIGH"),
+                            jobname = "monthly confidence interval",
+                            input=sqtxt(sample),
+                            param = list(sampledate = sampledate),
+                            output = sprintf("%s/fhr-lag/%s",BASEPATH, sampledate),
+                            reduce = rhoptions()$template$colsummer,
+                            setup = expression(map = {library(rjson)}),
+                            debug = "count",
+                            read = FALSE
 	)
 }
