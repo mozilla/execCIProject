@@ -34,7 +34,7 @@ getInterestDaterangeInfo <- function(month, allDaysInfo){
 getTotalSearch <- function(days){
 	tsearch <- totalSearchCounts(days, provider = FALSE, sap=FALSE)
 	if(is.null(tsearch)) {
-		0 
+		0
 	} else {
 		tsearch
 	}
@@ -47,7 +47,7 @@ getMAUInfo <- function(month, rData){
 		1
 	} else {
 		0
-	} 
+	}
 }
 
 checkForFilesNotRun <- function(sampleCreation, fileCreation){
@@ -72,17 +72,18 @@ sampleCreatedAfterMonthEnded <- function(getinfo, sample){
 }
 
 ## For creating tables
-mergeAllFiles <- function(load.all){
-	lapply(load.all, function(onefile){
-		file <- onefile
-		if(length(rhread(file)) != 0) 
-			make.dt(rhread(file), c("month","sampledate", "daysSince", "tmau", "tsec", "tsearch"))
-			})}
+mergeAllFiles <- function(load.all,verbose=TRUE){
+    lapply(load.all, function(onefile){
+        if(verbose) print(onefile)
+        x <- tryCatch(rhread(onefile),error=function(e) numeric(0) )
+        if(length(x) != 0)
+            make.dt(x, c("month","sampledate", "daysSince", "tmau", "tsec", "tsearch"))
+    })}
 
-createDataTable <- function(mergeAllFiles){
-	df <- do.call(rbind, mergeAllFiles)
-	save(df, file = "~/output/fhr-lag.RData")
-	data.table(df)
+createDataTable <- function(mergeAllFiles,dataDir = sprintf("%s/fhr-lag.RData",Sys.getenv("HOME"))){
+    df <- do.call(rbind, mergeAllFiles)
+    save(df, file = dataDir)
+    data.table(df)
 }
 
 forceToOne <- function(xdat){
@@ -98,7 +99,7 @@ intTable <- function(model){
 	ci <- data.frame(lb, ub)
 	ci95 <- exp(ci)/(1+exp(ci))
 	data.frame(pi.hat$fit, ci95)
-}	
+}
 
 email <- function(subj="blank subject", body="blank body",to="<cchoi@mozilla.com>"){
 	tryCatch({
@@ -109,7 +110,7 @@ email <- function(subj="blank subject", body="blank body",to="<cchoi@mozilla.com
 			control=list(smtpServer='smtp.mozilla.org'))
 		list(TRUE,NA)
        }, error=function(e) list(FALSE,e))
-    } 
+    }
 
 getPredictionRange <- function(sampleCreationDates){
 	latestDate <- max(sampleCreationDates) - 7
@@ -118,5 +119,3 @@ getPredictionRange <- function(sampleCreationDates){
 	earliestMonth <- ceiling_date(max(earliestDate), "month")
 	list(start = earliestMonth, end =latestMonth)
 }
-
-
