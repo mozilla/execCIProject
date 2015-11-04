@@ -1,5 +1,7 @@
+BASEPATH <- '/user/cchoi/output'
+
 sampleCreationDates <-getSampleCreationDates("/user/sguha/fhr/samples/backup")
-fileCreationDates <- getSampleCreationDates("/user/cchoi/output/fhr-lag")
+fileCreationDates <- getSampleCreationDates(sprintf("%s/fhr-lag",BASEPATH))
 listDates <- getStartAndEnd(sampleCreationDates)
 listOfMonths <- createMonthList(listDates)
 
@@ -22,7 +24,6 @@ m = function(key,jsonData){
 		rhcollect(list(month = whichmonth, sampledate = as.character(sampledate), daysSince = daysSinceMonthEnded), c(tmau = totalmau, tsec = totalsec, tsearch = totalsrch))
 	}
 }
-
 sampleToRun <- checkForFilesNotRun(sampleCreationDates, fileCreationDates)
 all.samples <- rhls("/user/sguha/fhr/samples/backup")$file
 for (sample in all.samples){
@@ -34,13 +35,10 @@ for (sample in all.samples){
 		jobname = "monthly confidence interval",
 		input=sqtxt(sample),
 		param = list(sampledate = sampledate),
-		output = sprintf("/user/cchoi/output/fhr-lag/%s", sampledate),
+		output = sprintf("%s/fhr-lag/%s",BASEPATH, sampledate),
 		reduce = rhoptions()$template$colsummer,
 		setup = expression(map = {library(rjson)}),
 		debug = "count",
 		read = FALSE
 	)
 }
-
-
-
