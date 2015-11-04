@@ -101,10 +101,10 @@ intTable <- function(model){
 	data.frame(pi.hat$fit, ci95)
 }
 
-email <- function(subj="blank subject", body="blank body",to="<cchoi@mozilla.com>"){
+email <- function(subj="blank subject", body="blank body",to="<metrics@mozilla.com>"){
 	tryCatch({
 		bodyWithAttachment <- list(body)
-		sendmail(from="<cchoi@mozilla.com>",
+		sendmail(from="<sguha@mozilla.com>",
 			to=to,
 			subject=subj,msg=bodyWithAttachment,
 			control=list(smtpServer='smtp.mozilla.org'))

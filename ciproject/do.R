@@ -1,5 +1,5 @@
 #!/usr/local/bin/Rscript
-setwd("~/fhr/ciproject")
+setwd(sprintf("%s/execdb_confinter", Sys.getenv("HOME")))
 tryCatch({
     source("funct.R")
     }, error=function(e) {
@@ -24,4 +24,3 @@ tryCatch({
  })
 
 email("CIProject: Success", body = sprintf("The last sample used: %s", as.character(max(sampleCreationDates))))
-
