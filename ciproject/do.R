@@ -1,5 +1,6 @@
 #!/usr/local/bin/Rscript
-setwd(sprintf("%s/execdb_confinter", Sys.getenv("HOME")))
+source("~/prefix.R")
+setwd(sprintf("%s/execdb_confinter/ciproject", Sys.getenv("HOME")))
 tryCatch({
     source("funct.R")
     }, error=function(e) {
