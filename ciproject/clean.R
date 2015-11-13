@@ -30,3 +30,6 @@ finalTable <- data.table(tableCI, mauInfo, srchInfo, secInfo)
 
 write.table(finalTable, file = "confidence_interval.csv", sep = ",", row.names = FALSE)
 system("scp confidence_interval.csv dashboard1.metrics.scl3.mozilla.com:/data/www/metrics.mozilla.com/protected/cchoi/")
+
+write.table(finalTable, file = "confidence_intervals.csv", sep = ",", row.names = FALSE)
+system("scp confidence_interval.csv dashboard1.metrics.scl3.mozilla.com:/data/www/metrics.mozilla.com/protected/cchoi/")
