@@ -11,10 +11,10 @@ mauRange <- intTable(glm(pmau ~ daysSince, data= cleanData, quasibinomial))
 srchRange <- intTable(glm(psrch ~ daysSince, data= cleanData, quasibinomial))
 secRange <- intTable(glm(psec ~ daysSince, data= cleanData, quasibinomial))
 
-currentInfoDate <- max(sampleCreationDates)-7
-predRange <- getPredictionRange(sampleCreationDates)
-predDates <- seq(as.Date(predRange$start), as.Date(predRange$end), "month")
-daysSinceSampleCreated <- abs(predDates - currentInfoDate)
+(currentInfoDate <- max(sampleCreationDates)-7)
+(predRange <- getPredictionRange(sampleCreationDates))
+(predDates <- seq(as.Date(predRange$start), as.Date(predRange$end), "month"))
+(daysSinceSampleCreated <- abs(predDates - currentInfoDate))
 tableCI <- data.table(predDates, daysSinceSampleCreated)
 tableCI$predDates <- as.Date(tableCI$predDates) - months(1)
 mauInfo <- data.table(mau_est = mauRange[tableCI$daysSinceSampleCreated,][[1]],
